@@ -16,15 +16,12 @@ public class Constants {
 
 
     public class Retrofit {
-
-        public final static String BASE_URL = "https://api-endpoint.igdb.com";
-
+        public final static String BASE_URL = "https://samples.openweathermap.org/data/2.5/weather";
     }
 
     public class OpenWeatherMap {
-        public final static String APP_ID = "b36112bee2ca196c6e78c31efbecb925";
-        //private final String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?id=%1&APPID=%2";
-        public final static String BASE_URL = "http://api.openweathermap.org/data/2.5/";
+        public final static String APP_ID = "9b7b961a63bc4d3d5948d54ad21db4de";
+        private final static String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?id=%1&APPID=%2";
     }
 
 }
