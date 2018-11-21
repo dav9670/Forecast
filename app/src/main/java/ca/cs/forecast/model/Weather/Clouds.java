@@ -12,4 +12,11 @@ public class Clouds {
     public float getAll() {
         return mAll;
     }
+
+    @Override
+    public String toString() {
+        return "Clouds{" +
+                "mAll=" + mAll +
+                '}';
+    }
 }

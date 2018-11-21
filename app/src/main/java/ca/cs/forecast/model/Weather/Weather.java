@@ -35,4 +35,14 @@ public class Weather {
     public String getIcon() {
         return mIcon;
     }
+
+    @Override
+    public String toString() {
+        return "Weather{" +
+                "mId=" + mId +
+                ", mMain='" + mMain + '\'' +
+                ", mDescription='" + mDescription + '\'' +
+                ", mIcon='" + mIcon + '\'' +
+                '}';
+    }
 }

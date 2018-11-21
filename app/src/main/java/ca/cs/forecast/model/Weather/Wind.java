@@ -18,4 +18,12 @@ public class Wind {
     public float getDeg() {
         return mDeg;
     }
+
+    @Override
+    public String toString() {
+        return "Wind{" +
+                "mSpeed=" + mSpeed +
+                ", mDeg=" + mDeg +
+                '}';
+    }
 }
