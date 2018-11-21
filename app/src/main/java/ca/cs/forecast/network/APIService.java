@@ -2,14 +2,15 @@ package ca.cs.forecast.network;
 
 import java.util.List;
 
+import ca.cs.forecast.model.Weather.WeatherCity;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.Query;
 
 public interface APIService {
 
-    @Headers("user-key: 5146fa78acba47690b115d8f272bbac1")
-    @GET("games/?filter[rating][gt]=50&limit=50&fields=*")
-    Call<List<Game>> fetchGames();
+    @GET("weather")
+    Call<WeatherCity> fetchWeatherCity(@Query("id") int id, @Query("appid") String appid);
 
 }
