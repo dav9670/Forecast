@@ -1,4 +1,4 @@
-﻿package ca.cs.forecast.model.Weather;
+package ca.cs.forecast.model.Weather;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -102,5 +102,8 @@ public class WeatherCity {
     public float getCod() {
         return mCod;
     }
-}
 
+    public String toString(){
+        return "mCoord : Lat = " + mCoord.getLat() + " Long = " + mCoord.getLon();
+    }
+}
