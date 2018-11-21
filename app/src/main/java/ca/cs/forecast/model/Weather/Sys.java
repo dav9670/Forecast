@@ -52,4 +52,16 @@ public class Sys {
     public float getSunset() {
         return mSunset;
     }
+
+    @Override
+    public String toString() {
+        return "Sys{" +
+                "mType=" + mType +
+                ", mId=" + mId +
+                ", mMessage=" + mMessage +
+                ", mCountry='" + mCountry + '\'' +
+                ", mSunrise=" + mSunrise +
+                ", mSunset=" + mSunset +
+                '}';
+    }
 }

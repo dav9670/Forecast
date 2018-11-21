@@ -102,8 +102,22 @@ public class WeatherCity {
     public float getCod() {
         return mCod;
     }
-
-    public String toString(){
-        return "mCoord : Lat = " + mCoord.getLat() + " Long = " + mCoord.getLon();
+  
+    @Override
+    public String toString() {
+        return "WeatherCity{" +
+                "mCoord=" + mCoord +
+                ", mWeather=" + mWeather +
+                ", mBase='" + mBase + '\'' +
+                ", mMain=" + mMain +
+                ", mVisibility=" + mVisibility +
+                ", mWind=" + mWind +
+                ", mClouds=" + mClouds +
+                ", mDt=" + mDt +
+                ", mSys=" + mSys +
+                ", mId=" + mId +
+                ", mName='" + mName + '\'' +
+                ", mCod=" + mCod +
+                '}';
     }
 }

@@ -20,4 +20,12 @@ public class Coord {
     public float getLat() {
         return mLat;
     }
+
+    @Override
+    public String toString() {
+        return "Coord{" +
+                "mLon=" + mLon +
+                ", mLat=" + mLat +
+                '}';
+    }
 }

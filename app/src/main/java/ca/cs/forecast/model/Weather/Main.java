@@ -44,4 +44,15 @@ public class Main {
     public float getTempMax() {
         return mTempMax;
     }
+
+    @Override
+    public String toString() {
+        return "Main{" +
+                "mTemp=" + mTemp +
+                ", mPressure=" + mPressure +
+                ", mHumidity=" + mHumidity +
+                ", mTempMin=" + mTempMin +
+                ", mTempMax=" + mTempMax +
+                '}';
+    }
 }
