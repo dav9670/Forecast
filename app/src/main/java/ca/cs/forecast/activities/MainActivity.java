@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Exemple d'utilisation de la base de donnée
         List<City> cities = ForecastApp.get().getDB().getCityDao().findCitiesForCountryCode("CA");
-        cities.forEach(
+        /*cities.forEach(
                 c ->
                 RetrofitClient.getAPIService().fetchWeatherCity(c.getId(), Constants.OpenWeatherMap.APP_ID).enqueue(new Callback<WeatherCity>() {
                     @Override
@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("Error", "Erreur de chargement de WeatherCity pour city id:" + c.getId());
                     }
                 })
-        );
-
+        );*/
     }
 }

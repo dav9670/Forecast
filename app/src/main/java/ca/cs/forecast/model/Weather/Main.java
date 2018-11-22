@@ -3,6 +3,8 @@ package ca.cs.forecast.model.Weather;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import ca.cs.forecast.utils.Constants;
+
 public class Main {
     @SerializedName("temp")
     @Expose
@@ -26,7 +28,7 @@ public class Main {
 
 
     public float getTemp() {
-        return mTemp;
+        return mTemp - Constants.KELVIN;
     }
 
     public float getPressure() {
