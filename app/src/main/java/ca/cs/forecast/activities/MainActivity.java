@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
                 RetrofitClient.getAPIService().fetchWeatherCity(c.getId(), Constants.OpenWeatherMap.APP_ID).enqueue(new Callback<WeatherCity>() {
                     @Override
                     public void onResponse(Call<WeatherCity> call, Response<WeatherCity> response) {
-                        //Si tout va bien, response.body contiendra les Games
+                        //Si tout va bien, response.body contiendra le weatherCity pour chaque ville
                         Log.d(TAG, c.toString());
                         Log.d(TAG, "WeatherCity pour city id:" + c.getId() + " = " + response.body().toString());
                     }
