@@ -16,7 +16,7 @@ public class Constants {
 
 
     public class Retrofit {
-        public final static String BASE_URL = "https://samples.openweathermap.org/data/2.5/";
+        public final static String BASE_URL = "https://api.openweathermap.org/data/2.5/";
     }
 
     public class OpenWeatherMap {
