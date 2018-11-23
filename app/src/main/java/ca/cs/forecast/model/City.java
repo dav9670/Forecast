@@ -11,15 +11,16 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "cities",
         foreignKeys = @ForeignKey(entity = Country.class,
-            parentColumns = "code",
-            childColumns = "country_code",
-            onDelete = CASCADE),
+                parentColumns = "code",
+                childColumns = "country_code",
+                onDelete = CASCADE),
         indices = {@Index(value = {"country_code"})})
 
 public class City {
 
     @ColumnInfo(name = "id")
-    @PrimaryKey private int mId;
+    @PrimaryKey
+    private int mId;
 
     @ColumnInfo(name = "country_code")
     private String mCountryCode;
@@ -32,6 +33,14 @@ public class City {
 
     @ColumnInfo(name = "longitude")
     private double mLongitude;
+
+    public City(int id, String countryCode, String name, double latitude, double longitude) {
+        this.mId = id;
+        this.mCountryCode = countryCode;
+        this.mName = name;
+        this.mLatitude = latitude;
+        this.mLongitude = longitude;
+    }
 
     public int getId() {
         return mId;
@@ -51,14 +60,6 @@ public class City {
 
     public double getLongitude() {
         return mLongitude;
-    }
-
-    public City(int id, String countryCode, String name, double latitude, double longitude) {
-        this.mId = id;
-        this.mCountryCode = countryCode;
-        this.mName = name;
-        this.mLatitude = latitude;
-        this.mLongitude = longitude;
     }
 
     @Override

@@ -102,7 +102,7 @@ public class WeatherCity {
     public float getCod() {
         return mCod;
     }
-  
+
     @Override
     public String toString() {
         return "WeatherCity{" +
