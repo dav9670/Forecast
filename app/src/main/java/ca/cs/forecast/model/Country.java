@@ -11,10 +11,12 @@ import android.support.annotation.NonNull;
 public class Country {
 
     @ColumnInfo(name = "id")
-    @PrimaryKey private int mId;
+    @PrimaryKey
+    private int mId;
 
     @ColumnInfo(name = "code")
-    @NonNull private String mCode;
+    @NonNull
+    private String mCode;
 
     @ColumnInfo(name = "name")
     private String mName;
@@ -24,6 +26,14 @@ public class Country {
 
     @ColumnInfo(name = "population")
     private long mPopulation;
+
+    public Country(int id, String code, String name, String continent, long population) {
+        this.mId = id;
+        this.mCode = code;
+        this.mName = name;
+        this.mContinent = continent;
+        this.mPopulation = population;
+    }
 
     public int getId() {
         return mId;
@@ -43,13 +53,5 @@ public class Country {
 
     public long getPopulation() {
         return mPopulation;
-    }
-
-    public Country(int id, String code, String name, String continent, long population) {
-        this.mId = id;
-        this.mCode = code;
-        this.mName = name;
-        this.mContinent = continent;
-        this.mPopulation = population;
     }
 }

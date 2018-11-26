@@ -1,23 +1,16 @@
 package ca.cs.forecast.activities;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
 
-import java.util.List;
-
-import ca.cs.forecast.ForecastApp;
 import ca.cs.forecast.R;
-import ca.cs.forecast.model.City;
-import ca.cs.forecast.model.Weather.WeatherCity;
-import ca.cs.forecast.network.RetrofitClient;
-import ca.cs.forecast.utils.Constants;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import ca.cs.forecast.data.CountryViewModel;
+import ca.cs.forecast.fragments.CountryFragment;
+import ca.cs.forecast.model.Country;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CountryFragment.OnListFragmentInteractionListener {
 
     public final static String TAG = MainActivity.class.getSimpleName();
 
@@ -26,14 +19,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_layout);
 
+        CountryFragment countryFragment = new CountryFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction().add(R.id.activity_main_fragment, countryFragment);
+        transaction.commit();
+
         //Exemple d'utilisation de la base de donnée
-        List<City> cities = ForecastApp.get().getDB().getCityDao().findCitiesForCountryCode("CA");
-        cities.forEach(
+        //List<City> cities = ForecastApp.get().getDB().getCityDao().findCitiesForCountryCode("CA");
+        /*cities.forEach(
                 c ->
                 RetrofitClient.getAPIService().fetchWeatherCity(c.getId(), Constants.OpenWeatherMap.APP_ID).enqueue(new Callback<WeatherCity>() {
                     @Override
                     public void onResponse(Call<WeatherCity> call, Response<WeatherCity> response) {
-                        //Si tout va bien, response.body contiendra les Games
+                        //Si tout va bien, response.body contiendra le weatherCity pour chaque ville
                         Log.d(TAG, c.toString());
                         Log.d(TAG, "WeatherCity pour city id:" + c.getId() + " = " + response.body().toString());
                     }
@@ -44,7 +41,11 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("Error", "Erreur de chargement de WeatherCity pour city id:" + c.getId());
                     }
                 })
-        );
+        );*/
+    }
 
+    @Override
+    public void onListFragmentInteraction(Country item) {
+        ViewModelProviders.of(this).get(CountryViewModel.class).setSelectedItem(item);
     }
 }

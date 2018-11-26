@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Forecast</string>
+    <string name="country">Pays</string>
+    <string name="continent">Continent</string>
+    <string name="population_size">Nombre d\'habitants</string>
+</resources>

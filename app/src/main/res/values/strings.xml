@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Forecast</string>
+    <string name="country">Country</string>
+    <string name="continent">Continent</string>
+    <string name="population_size">Population size</string>
 </resources>
