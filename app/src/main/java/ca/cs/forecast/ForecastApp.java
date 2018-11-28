@@ -44,14 +44,14 @@ public class ForecastApp extends Application {
 
         final File dbPath = getApplicationContext().getDatabasePath(Constants.DATABASE_NAME);
 
-         if (dbPath.exists())
+        if (dbPath.exists())
             return;
 
         dbPath.getParentFile().mkdirs();
 
 
         try {
-            final InputStream inputStream = getApplicationContext().getAssets().open( Constants.DATABASE_NAME );
+            final InputStream inputStream = getApplicationContext().getAssets().open(Constants.DATABASE_NAME);
             final OutputStream output = new FileOutputStream(dbPath);
 
             byte[] buffer = new byte[8192];
@@ -64,8 +64,7 @@ public class ForecastApp extends Application {
             output.flush();
             output.close();
             inputStream.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
