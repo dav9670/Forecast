@@ -29,10 +29,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecyclerViewAdapter.ViewHolder> {
 
     private List<Country> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private final OnItemClickListener mListener;
     private Context mContext;
 
-    public CountryRecyclerViewAdapter(List<Country> items, OnListFragmentInteractionListener listener, Context context) {
+    public CountryRecyclerViewAdapter(List<Country> items, OnItemClickListener listener, Context context) {
         mValues = items;
         mListener = listener;
         mContext = context;
@@ -84,7 +84,7 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onCountryListFragmentInteraction(holder.mItem);
+                    mListener.onItemClick(holder.mItem);
                 }
             }
         });
@@ -111,5 +111,9 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
             continentNameTextView = view.findViewById(R.id.continent_name_textView);
             populationSizeTextView = view.findViewById(R.id.population_size_textView);
         }
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(Country country);
     }
 }

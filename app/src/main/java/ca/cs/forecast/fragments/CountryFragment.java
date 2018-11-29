@@ -67,7 +67,12 @@ public class CountryFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             CountryViewModel countryViewModel = ViewModelProviders.of(getActivity()).get(CountryViewModel.class);
-            recyclerView.setAdapter(new CountryRecyclerViewAdapter(countryViewModel.getItemList().getValue(), mListener, getContext()));
+            recyclerView.setAdapter(new CountryRecyclerViewAdapter(countryViewModel.getItemList().getValue(), new CountryRecyclerViewAdapter.OnItemClickListener(){
+                @Override
+                public void onItemClick(Country country) {
+                    mListener.onCountryListFragmentInteraction(country);
+                }
+            }, getContext()));
         }
         return view;
     }
