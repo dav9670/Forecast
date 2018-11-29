@@ -17,7 +17,8 @@
         android:usesCleartextTraffic="true"
         android:name="ca.cs.forecast.ForecastApp">
 
-        <activity android:name="ca.cs.forecast.activities.MainActivity">
+        <activity android:name="ca.cs.forecast.activities.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
