@@ -1,5 +1,6 @@
 package ca.cs.forecast.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,9 +11,13 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import ca.cs.forecast.ForecastApp;
 import ca.cs.forecast.R;
+import ca.cs.forecast.activities.MainActivity;
 import ca.cs.forecast.fragments.CountryFragment.OnListFragmentInteractionListener;
 import ca.cs.forecast.model.Country;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -23,7 +28,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Country> mValues;
+    private List<Country> mValues;
     private final OnListFragmentInteractionListener mListener;
     private Context mContext;
 
@@ -31,6 +36,26 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
         mValues = items;
         mListener = listener;
         mContext = context;
+        MainActivity activity = (MainActivity) context;
+        activity.setOnMenuItemClickListener(new MainActivity.OnMenuItemClickListener() {
+            @Override
+            public void sortByName() {
+                mValues = ForecastApp.get().getDB().getCountryDao().getAllByName();
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void sortByContinent() {
+                mValues = ForecastApp.get().getDB().getCountryDao().getAllByContinent();
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void sortByPopulation() {
+                mValues = ForecastApp.get().getDB().getCountryDao().getAllByPopulation();
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override

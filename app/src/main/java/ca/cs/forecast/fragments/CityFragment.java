@@ -7,10 +7,12 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
 import ca.cs.forecast.R;
+import ca.cs.forecast.activities.MainActivity;
 import ca.cs.forecast.fragments.dummy.DummyContent;
 import ca.cs.forecast.fragments.dummy.DummyContent.DummyItem;
 import ca.cs.forecast.model.Country;
@@ -94,12 +96,24 @@ public class CityFragment extends Fragment {
         }else{
             getActivity().setTitle(R.string.cities);
         }
+        Menu menu = ((MainActivity)getActivity()).mMenu;
+        if(menu != null){
+            menu.findItem(R.id.action_country_menu_name).setVisible(false);
+            menu.findItem(R.id.action_country_menu_continent).setVisible(false);
+            menu.findItem(R.id.action_country_menu_population).setVisible(false);
+        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         getActivity().setTitle(R.string.country);
+        Menu menu = ((MainActivity)getActivity()).mMenu;
+        if(menu != null){
+            menu.findItem(R.id.action_country_menu_name).setVisible(true);
+            menu.findItem(R.id.action_country_menu_continent).setVisible(true);
+            menu.findItem(R.id.action_country_menu_population).setVisible(true);
+        }
         mListener = null;
     }
 
