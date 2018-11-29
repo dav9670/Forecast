@@ -32,12 +32,11 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
     private final OnItemClickListener mListener;
     private Context mContext;
 
-    public CountryRecyclerViewAdapter(List<Country> items, OnItemClickListener listener, Context context) {
+    public CountryRecyclerViewAdapter(List<Country> items, OnItemClickListener listener, Context context, CountryFragment fragment) {
         mValues = items;
         mListener = listener;
         mContext = context;
-        MainActivity activity = (MainActivity) context;
-        activity.setOnMenuItemClickListener(new MainActivity.OnMenuItemClickListener() {
+        fragment.setOnMenuItemClickListener(new CountryFragment.OnMenuItemClickListener() {
             @Override
             public void sortByName() {
                 mValues = ForecastApp.get().getDB().getCountryDao().getAllByName();
