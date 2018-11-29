@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements CountryFragment.O
 
     @Override
     public void onCountryListFragmentInteraction(Country item) {
-        ViewModelProviders.of(this).get(CountryViewModel.class).setSelectedItem(item);
         CityFragment cityFragment = new CityFragment();
         cityFragment.setCountry(item);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_fragment, cityFragment);

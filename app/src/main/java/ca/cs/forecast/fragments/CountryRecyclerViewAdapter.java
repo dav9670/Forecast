@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import ca.cs.forecast.ForecastApp;
 import ca.cs.forecast.R;
 import ca.cs.forecast.activities.MainActivity;
 import ca.cs.forecast.fragments.CountryFragment.OnListFragmentInteractionListener;
@@ -27,7 +28,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Country> mValues;
+    private List<Country> mValues;
     private final OnListFragmentInteractionListener mListener;
     private Context mContext;
 
@@ -39,48 +40,19 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
         activity.setOnMenuItemClickListener(new MainActivity.OnMenuItemClickListener() {
             @Override
             public void sortByName() {
-                Log.d("sort", "sort by name");
-                /*boolean change;
-                do{
-                    change = false;
-                    for (int i = 0; i < mValues.size() - 1; i++) {
-                        if(mValues.get(i).getName().compareTo(mValues.get(i + 1).getName()) < 0){
-                            change = true;
-                            Country temp = mValues.get(i);
-                            //mValues.get(i) = mValues.get(i + 1);
-                        }
-                    }
-                }while (change == true);*/
-                Collections.sort(mValues, new Comparator<Country>() {
-                    @Override
-                    public int compare(Country lhs, Country rhs) {
-                        return lhs.getId() > rhs.getId() ? -1 : (lhs.getName().compareTo(rhs.getName()) < 0) ? 1 : 0;
-                    }
-                });
+                mValues = ForecastApp.get().getDB().getCountryDao().getAllByName();
                 notifyDataSetChanged();
             }
 
             @Override
             public void sortByContinent() {
-                Log.d("sort", "sort by continent");
-                Collections.sort(mValues, new Comparator<Country>() {
-                    @Override
-                    public int compare(Country lhs, Country rhs) {
-                        return lhs.getId() > rhs.getId() ? -1 : (lhs.getContinent().compareTo(rhs.getContinent()) < 0) ? 1 : 0;
-                    }
-                });
+                mValues = ForecastApp.get().getDB().getCountryDao().getAllByContinent();
                 notifyDataSetChanged();
             }
 
             @Override
             public void sortByPopulation() {
-                Log.d("sort", "sort by population");
-                Collections.sort(mValues, new Comparator<Country>() {
-                    @Override
-                    public int compare(Country lhs, Country rhs) {
-                        return lhs.getId() > rhs.getId() ? -1 : (lhs.getPopulation() < rhs.getPopulation()) ? 1 : 0;
-                    }
-                });
+                mValues = ForecastApp.get().getDB().getCountryDao().getAllByPopulation();
                 notifyDataSetChanged();
             }
         });
