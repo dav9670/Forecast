@@ -44,9 +44,8 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
 
-        String url = "http://www.geognos.com/api/en/countries/flag/*id.png";
-        url = url.replace("*id", mValues.get(position).getCode());
-        Log.d("URL", url);
+        String url = "http://www.geognos.com/api/en/countries/flag/*code.png";
+        url = url.replace("*code", mValues.get(position).getCode());
         Picasso.with(mContext).load(url).placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
                 .into(holder.imageView);
@@ -60,7 +59,7 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onCountryListFragmentInteraction(holder.mItem);
                 }
             }
         });

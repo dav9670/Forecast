@@ -1,6 +1,5 @@
 package ca.cs.forecast.fragments;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,8 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ca.cs.forecast.R;
-import ca.cs.forecast.data.CountryViewModel;
+import ca.cs.forecast.fragments.dummy.DummyContent;
+import ca.cs.forecast.fragments.dummy.DummyContent.DummyItem;
 import ca.cs.forecast.model.Country;
+
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -21,22 +23,28 @@ import ca.cs.forecast.model.Country;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class CountryFragment extends Fragment {
+public class CityFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    private Country mCountry = null;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public CountryFragment() {
+    public CityFragment() {
     }
 
+    public void setCountry(Country country) {
+        mCountry = country;
+    }
+
+    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static CountryFragment newInstance(int columnCount) {
-        CountryFragment fragment = new CountryFragment();
+    public static CityFragment newInstance(int columnCount) {
+        CityFragment fragment = new CityFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -55,7 +63,7 @@ public class CountryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_country_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_city_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -66,8 +74,7 @@ public class CountryFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            CountryViewModel countryViewModel = ViewModelProviders.of(getActivity()).get(CountryViewModel.class);
-            recyclerView.setAdapter(new CountryRecyclerViewAdapter(countryViewModel.getItemList().getValue(), mListener, getContext()));
+            recyclerView.setAdapter(new CityRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }
         return view;
     }
@@ -82,11 +89,17 @@ public class CountryFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
         }
+        if(mCountry != null){
+            getActivity().setTitle(getString(R.string.cities) + " - " + mCountry.getName());
+        }else{
+            getActivity().setTitle(R.string.cities);
+        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        getActivity().setTitle(R.string.country);
         mListener = null;
     }
 
@@ -101,6 +114,6 @@ public class CountryFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        void onCountryListFragmentInteraction(Country country);
+        void onCityListFragmentInteraction(DummyItem item);
     }
 }
