@@ -4,4 +4,5 @@
     <string name="country">Pays</string>
     <string name="continent">Continent</string>
     <string name="population_size">Nombre d\'habitants</string>
+    <string name="cities">Villes</string>
 </resources>
