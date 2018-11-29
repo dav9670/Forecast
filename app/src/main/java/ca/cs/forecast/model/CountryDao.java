@@ -20,5 +20,7 @@ public interface CountryDao {
     @Query("SELECT * FROM countries ORDER BY population")
     List<Country> getAllByPopulation();
 
+    @Query("SELECT * FROM countries WHERE code = :code")
+    Country getByCode(String code);
 
 }

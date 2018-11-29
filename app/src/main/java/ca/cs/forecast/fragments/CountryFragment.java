@@ -8,10 +8,14 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import ca.cs.forecast.R;
+import ca.cs.forecast.activities.MainActivity;
 import ca.cs.forecast.data.CountryViewModel;
 import ca.cs.forecast.model.Country;
 
@@ -25,6 +29,7 @@ public class CountryFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
+    private OnMenuItemClickListener mMenuListener;
     private OnListFragmentInteractionListener mListener;
 
     /**
@@ -72,8 +77,10 @@ public class CountryFragment extends Fragment {
                 public void onItemClick(Country country) {
                     mListener.onCountryListFragmentInteraction(country);
                 }
-            }, getContext()));
+            }, getContext(), this));
         }
+
+        setHasOptionsMenu(true);
         return view;
     }
 
@@ -107,5 +114,41 @@ public class CountryFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         void onCountryListFragmentInteraction(Country country);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.country_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_country_menu_name) {
+            mMenuListener.sortByName();
+            return true;
+        }
+        if (id == R.id.action_country_menu_continent) {
+            mMenuListener.sortByContinent();
+            return true;
+        }
+        if (id == R.id.action_country_menu_population) {
+            mMenuListener.sortByPopulation();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void setOnMenuItemClickListener(OnMenuItemClickListener listener) {
+        mMenuListener = listener;
+    }
+
+    public interface OnMenuItemClickListener {
+        void sortByName();
+        void sortByContinent();
+        void sortByPopulation();
     }
 }
