@@ -1,5 +1,6 @@
 package ca.cs.forecast.fragments;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 
 import ca.cs.forecast.R;
 import ca.cs.forecast.activities.MainActivity;
+import ca.cs.forecast.data.CountryViewModel;
 import ca.cs.forecast.fragments.dummy.DummyContent;
 import ca.cs.forecast.fragments.dummy.DummyContent.DummyItem;
 import ca.cs.forecast.model.Country;
@@ -39,11 +41,6 @@ public class CityFragment extends Fragment {
     public CityFragment() {
     }
 
-    public void setCountry(Country country) {
-        mCountry = country;
-    }
-
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static CityFragment newInstance(int columnCount) {
         CityFragment fragment = new CityFragment();
@@ -85,6 +82,7 @@ public class CityFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        mCountry = ViewModelProviders.of(this).get(CountryViewModel.class).getSelectedItem();
         if (context instanceof OnListFragmentInteractionListener) {
             mListener = (OnListFragmentInteractionListener) context;
         } else {
