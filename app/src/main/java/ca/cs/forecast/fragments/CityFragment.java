@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import ca.cs.forecast.R;
 import ca.cs.forecast.fragments.dummy.DummyContent;
 import ca.cs.forecast.fragments.dummy.DummyContent.DummyItem;
+import ca.cs.forecast.model.Country;
 
 import java.util.List;
 
@@ -24,17 +25,20 @@ import java.util.List;
  */
 public class CityFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    private Country mCountry = null;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
     public CityFragment() {
+    }
+
+    public void setCountry(Country country) {
+        mCountry = country;
     }
 
     // TODO: Customize parameter initialization
@@ -85,7 +89,11 @@ public class CityFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
         }
-        getActivity().setTitle(R.string.cities);
+        if(mCountry != null){
+            getActivity().setTitle(getString(R.string.cities) + " - " + mCountry.getName());
+        }else{
+            getActivity().setTitle(R.string.cities);
+        }
     }
 
     @Override
@@ -106,7 +114,6 @@ public class CityFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onCityListFragmentInteraction(DummyItem item);
     }
 }
