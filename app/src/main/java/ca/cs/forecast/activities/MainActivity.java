@@ -53,13 +53,14 @@ public class MainActivity extends AppCompatActivity implements CountryFragment.O
     public void onCountryListFragmentInteraction(Country item) {
         ViewModelProviders.of(this).get(CountryViewModel.class).setSelectedItem(item);
         CityFragment cityFragment = new CityFragment();
+        cityFragment.setCountry(item);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_fragment, cityFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+    public void onCityListFragmentInteraction(DummyContent.DummyItem item) {
 
     }
 }

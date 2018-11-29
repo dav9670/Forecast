@@ -4,4 +4,7 @@
     <string name="continent">Continent</string>
     <string name="population_size">Population size</string>
     <string name="cities">Cities</string>
+    <string name="sort_name">Sort by name</string>
+    <string name="sort_continent">Sort by continent</string>
+    <string name="sort_population">Sort by population</string>
 </resources>
