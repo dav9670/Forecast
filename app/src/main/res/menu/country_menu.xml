@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/action_country_menu_name"
+        android:title="@string/sort_name" />
+
+    <item android:id="@+id/action_country_menu_continent"
+        android:title="@string/sort_continent" />
+
+    <item android:id="@+id/action_country_menu_population"
+        android:title="@string/sort_population" />
+
+</menu>
