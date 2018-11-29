@@ -2,21 +2,17 @@ package ca.cs.forecast.activities;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.StringRes;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import ca.cs.forecast.R;
+import ca.cs.forecast.data.CityViewModel;
 import ca.cs.forecast.data.CountryViewModel;
 import ca.cs.forecast.fragments.CityFragment;
 import ca.cs.forecast.fragments.CountryFragment;
-import ca.cs.forecast.fragments.dummy.DummyContent;
+import ca.cs.forecast.model.City;
 import ca.cs.forecast.model.Country;
 
 public class MainActivity extends AppCompatActivity implements CountryFragment.OnListFragmentInteractionListener, CityFragment.OnListFragmentInteractionListener {
@@ -35,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements CountryFragment.O
         mImageView = findViewById(R.id.city_flag_pictureView);
         setTitle(R.string.country);
 
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             CountryFragment countryFragment = new CountryFragment();
             getSupportFragmentManager().beginTransaction().add(R.id.activity_main_fragment, countryFragment).commit();
         }
@@ -63,20 +59,20 @@ public class MainActivity extends AppCompatActivity implements CountryFragment.O
 
     @Override
     public void onCountryListFragmentInteraction(Country item) {
-        //Ne fonctionne pas finalement
-        //ViewModelProviders.of(this).get(CountryViewModel.class).setSelectedItem(item);
-        CityFragment cityFragment = CityFragment.newInstance(item);
+        ViewModelProviders.of(this).get(CountryViewModel.class).setSelectedItem(item);
+
+        CityFragment cityFragment = new CityFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_fragment, cityFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
 
     @Override
-    public void onCityListFragmentInteraction(DummyContent.DummyItem item) {
-
+    public void onCityListFragmentInteraction(City item) {
+        ViewModelProviders.of(this).get(CityViewModel.class).setSelectedItem(item);
     }
 
-    public ImageView getImageView(){
+    public ImageView getImageView() {
         return mImageView;
     }
 }

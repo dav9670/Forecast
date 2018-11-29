@@ -1,9 +1,7 @@
 package ca.cs.forecast.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +9,10 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import ca.cs.forecast.ForecastApp;
 import ca.cs.forecast.R;
-import ca.cs.forecast.activities.MainActivity;
 import ca.cs.forecast.fragments.CountryFragment.OnListFragmentInteractionListener;
 import ca.cs.forecast.model.Country;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -28,8 +23,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecyclerViewAdapter.ViewHolder> {
 
-    private List<Country> mValues;
     private final OnItemClickListener mListener;
+    private List<Country> mValues;
     private Context mContext;
 
     public CountryRecyclerViewAdapter(List<Country> items, OnItemClickListener listener, Context context, CountryFragment fragment) {
@@ -94,12 +89,16 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
         return mValues.size();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(Country country);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final CircleImageView imageView;
         public final TextView countryNameTextView;
         public final TextView continentNameTextView;
-        public  final TextView populationSizeTextView;
+        public final TextView populationSizeTextView;
         public Country mItem;
 
         public ViewHolder(View view) {
@@ -110,9 +109,5 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
             continentNameTextView = view.findViewById(R.id.continent_name_textView);
             populationSizeTextView = view.findViewById(R.id.population_size_textView);
         }
-    }
-
-    public interface OnItemClickListener{
-        void onItemClick(Country country);
     }
 }
