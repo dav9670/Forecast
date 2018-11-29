@@ -1,10 +1,14 @@
 package ca.cs.forecast.fragments;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -21,10 +25,12 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
 
     private final List<Country> mValues;
     private final OnListFragmentInteractionListener mListener;
+    private Context mContext;
 
-    public CountryRecyclerViewAdapter(List<Country> items, OnListFragmentInteractionListener listener) {
+    public CountryRecyclerViewAdapter(List<Country> items, OnListFragmentInteractionListener listener, Context context) {
         mValues = items;
         mListener = listener;
+        mContext = context;
     }
 
     @Override
@@ -38,8 +44,12 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
 
-        //TODO Set flag picture
-
+        String url = "http://www.geognos.com/api/en/countries/flag/*id.png";
+        url = url.replace("*id", mValues.get(position).getCode());
+        Log.d("URL", url);
+        Picasso.with(mContext).load(url).placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
+                .into(holder.imageView);
         holder.countryNameTextView.setText(mValues.get(position).getName());
         holder.continentNameTextView.setText(mValues.get(position).getContinent());
         holder.populationSizeTextView.setText(Long.toString(mValues.get(position).getPopulation()));
