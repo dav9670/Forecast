@@ -8,6 +8,7 @@ public class CityViewModel extends GenericViewModel<City> {
     private String countryCode;
 
     public void setCountryCode(String countryCode) {
+        itemList = null;
         this.countryCode = countryCode;
     }
 

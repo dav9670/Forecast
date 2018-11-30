@@ -1,6 +1,8 @@
-package ca.cs.forecast.fragments;
+package ca.cs.forecast.fragments.Country;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +13,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import ca.cs.forecast.ForecastApp;
 import ca.cs.forecast.R;
-import ca.cs.forecast.fragments.CountryFragment.OnListFragmentInteractionListener;
+import ca.cs.forecast.data.CountryViewModel;
+import ca.cs.forecast.fragments.Country.CountryFragment.OnListFragmentInteractionListener;
 import ca.cs.forecast.model.Country;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -34,19 +36,25 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
         fragment.setOnMenuItemClickListener(new CountryFragment.OnMenuItemClickListener() {
             @Override
             public void sortByName() {
-                mValues = ForecastApp.get().getDB().getCountryDao().getAllByName();
+                CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
+                countryViewModel.setSortMode(CountryViewModel.SORT_MODE.NAME);
+                mValues = countryViewModel.getItemList();
                 notifyDataSetChanged();
             }
 
             @Override
             public void sortByContinent() {
-                mValues = ForecastApp.get().getDB().getCountryDao().getAllByContinent();
+                CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
+                countryViewModel.setSortMode(CountryViewModel.SORT_MODE.CONTINENT);
+                mValues = countryViewModel.getItemList();
                 notifyDataSetChanged();
             }
 
             @Override
             public void sortByPopulation() {
-                mValues = ForecastApp.get().getDB().getCountryDao().getAllByPopulation();
+                CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
+                countryViewModel.setSortMode(CountryViewModel.SORT_MODE.POPULATION);
+                mValues = countryViewModel.getItemList();
                 notifyDataSetChanged();
             }
         });

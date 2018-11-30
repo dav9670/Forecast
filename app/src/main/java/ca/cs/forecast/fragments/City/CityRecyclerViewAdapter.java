@@ -1,4 +1,4 @@
-package ca.cs.forecast.fragments;
+package ca.cs.forecast.fragments.City;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import ca.cs.forecast.R;
-import ca.cs.forecast.fragments.CityFragment.OnListFragmentInteractionListener;
+import ca.cs.forecast.fragments.City.CityFragment.OnListFragmentInteractionListener;
 import ca.cs.forecast.model.City;
 
 /**
@@ -36,9 +36,8 @@ public class CityRecyclerViewAdapter extends RecyclerView.Adapter<CityRecyclerVi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        /*holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mItem = mValues.get(position);
+        holder.mcityNameTextView.setText(mValues.get(position).getName());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +48,7 @@ public class CityRecyclerViewAdapter extends RecyclerView.Adapter<CityRecyclerVi
                     mListener.onCityListFragmentInteraction(holder.mItem);
                 }
             }
-        });*/
+        });
     }
 
     @Override
@@ -59,20 +58,13 @@ public class CityRecyclerViewAdapter extends RecyclerView.Adapter<CityRecyclerVi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        //public DummyItem mItem;
+        public final TextView mcityNameTextView;
+        public City mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = view.findViewById(R.id.item_number);
-            mContentView = view.findViewById(R.id.content);
-        }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            mcityNameTextView = view.findViewById(R.id.city_name_textView);
         }
     }
 }

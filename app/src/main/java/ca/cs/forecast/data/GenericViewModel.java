@@ -9,7 +9,7 @@ import java.util.List;
 
 public abstract class GenericViewModel<T> extends ViewModel {
     protected MutableLiveData<List<T>> itemList;
-    private int selectedIndex;
+    private T selectedItem;
 
     private List<RecyclerView.Adapter> adapterList;
 
@@ -20,18 +20,18 @@ public abstract class GenericViewModel<T> extends ViewModel {
     public List<T> getItemList() {
         if (itemList == null) {
             itemList = new MutableLiveData<List<T>>();
-            selectedIndex = 0;
+            selectedItem = null;
             loadData();
         }
         return itemList.getValue();
     }
 
     public T getSelectedItem() {
-        return getItemList().get(selectedIndex);
+        return selectedItem;
     }
 
     public void setSelectedItem(T item) {
-        selectedIndex = getItemList().indexOf(item);
+        selectedItem = item;
     }
 
     public void removeItem(T item) {

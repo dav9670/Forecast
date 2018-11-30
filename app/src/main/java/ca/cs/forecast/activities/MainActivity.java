@@ -10,8 +10,9 @@ import android.widget.ImageView;
 import ca.cs.forecast.R;
 import ca.cs.forecast.data.CityViewModel;
 import ca.cs.forecast.data.CountryViewModel;
-import ca.cs.forecast.fragments.CityFragment;
-import ca.cs.forecast.fragments.CountryFragment;
+import ca.cs.forecast.fragments.City.CityFragment;
+import ca.cs.forecast.fragments.Country.CountryFragment;
+import ca.cs.forecast.fragments.Weather.WeatherFragment;
 import ca.cs.forecast.model.City;
 import ca.cs.forecast.model.Country;
 
@@ -70,6 +71,11 @@ public class MainActivity extends AppCompatActivity implements CountryFragment.O
     @Override
     public void onCityListFragmentInteraction(City item) {
         ViewModelProviders.of(this).get(CityViewModel.class).setSelectedItem(item);
+
+        WeatherFragment weatherFragment = new WeatherFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_fragment, weatherFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     public ImageView getImageView() {

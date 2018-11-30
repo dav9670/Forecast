@@ -1,4 +1,4 @@
-package ca.cs.forecast.fragments;
+package ca.cs.forecast.fragments.City;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
