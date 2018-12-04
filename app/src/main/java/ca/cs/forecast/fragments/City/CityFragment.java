@@ -1,5 +1,6 @@
-package ca.cs.forecast.fragments;
+package ca.cs.forecast.fragments.City;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,17 +8,18 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
 
 import ca.cs.forecast.R;
 import ca.cs.forecast.activities.MainActivity;
-import ca.cs.forecast.fragments.dummy.DummyContent;
-import ca.cs.forecast.fragments.dummy.DummyContent.DummyItem;
+import ca.cs.forecast.data.CityViewModel;
+import ca.cs.forecast.data.CountryViewModel;
+import ca.cs.forecast.model.City;
 import ca.cs.forecast.model.Country;
-
-import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -39,11 +41,6 @@ public class CityFragment extends Fragment {
     public CityFragment() {
     }
 
-    public void setCountry(Country country) {
-        mCountry = country;
-    }
-
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static CityFragment newInstance(int columnCount) {
         CityFragment fragment = new CityFragment();
@@ -57,10 +54,13 @@ public class CityFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mCountry = ViewModelProviders.of(getActivity()).get(CountryViewModel.class).getSelectedItem();
+
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,7 +76,22 @@ public class CityFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new CityRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+
+            CityViewModel cityViewModel = ViewModelProviders.of(getActivity()).get(CityViewModel.class);
+            cityViewModel.setCountryCode(mCountry.getCode());
+            recyclerView.setAdapter(new CityRecyclerViewAdapter(cityViewModel.getItemList(), mListener));
+        }
+        if (mCountry != null) {
+            getActivity().setTitle(getString(R.string.cities) + " - " + mCountry.getName());
+
+            ImageView imageView = ((MainActivity) getActivity()).getImageView();
+            String url = "http://www.geognos.com/api/en/countries/flag/*code.png";
+            url = url.replace("*code", mCountry.getCode());
+            Picasso.with(getContext()).load(url).placeholder(R.mipmap.ic_launcher)
+                    .error(R.mipmap.ic_launcher)
+                    .into(imageView);
+        } else {
+            getActivity().setTitle(R.string.cities);
         }
         return view;
     }
@@ -91,29 +106,14 @@ public class CityFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
         }
-        if(mCountry != null){
-            getActivity().setTitle(getString(R.string.cities) + " - " + mCountry.getName());
-        }else{
-            getActivity().setTitle(R.string.cities);
-        }
-        Menu menu = ((MainActivity)getActivity()).mMenu;
-        if(menu != null){
-            menu.findItem(R.id.action_country_menu_name).setVisible(false);
-            menu.findItem(R.id.action_country_menu_continent).setVisible(false);
-            menu.findItem(R.id.action_country_menu_population).setVisible(false);
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         getActivity().setTitle(R.string.country);
-        Menu menu = ((MainActivity)getActivity()).mMenu;
-        if(menu != null){
-            menu.findItem(R.id.action_country_menu_name).setVisible(true);
-            menu.findItem(R.id.action_country_menu_continent).setVisible(true);
-            menu.findItem(R.id.action_country_menu_population).setVisible(true);
-        }
+        ImageView imageView = ((MainActivity) getActivity()).getImageView();
+        imageView.setImageIcon(null);
         mListener = null;
     }
 
@@ -128,6 +128,6 @@ public class CityFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        void onCityListFragmentInteraction(DummyItem item);
+        void onCityListFragmentInteraction(City item);
     }
 }
