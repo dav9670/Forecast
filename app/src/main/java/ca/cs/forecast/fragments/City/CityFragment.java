@@ -79,19 +79,24 @@ public class CityFragment extends Fragment {
 
             CityViewModel cityViewModel = ViewModelProviders.of(getActivity()).get(CityViewModel.class);
             cityViewModel.setCountryCode(mCountry.getCode());
-            recyclerView.setAdapter(new CityRecyclerViewAdapter(cityViewModel.getItemList(), mListener));
+            recyclerView.setAdapter(new CityRecyclerViewAdapter(cityViewModel.getItemList(), new CityRecyclerViewAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(City city) {
+                    mListener.onCityListFragmentInteraction(city);
+                }
+            }));
         }
         if (mCountry != null) {
-            getActivity().setTitle(getString(R.string.cities) + " - " + mCountry.getName());
+            ((MainActivity) getActivity()).getToolbarTitle().setText(getString(R.string.cities) + " - " + mCountry.getName());
 
-            ImageView imageView = ((MainActivity) getActivity()).getImageView();
+            ImageView imageView = ((MainActivity) getActivity()).getToolbarImageView();
             String url = "http://www.geognos.com/api/en/countries/flag/*code.png";
             url = url.replace("*code", mCountry.getCode());
             Picasso.with(getContext()).load(url).placeholder(R.mipmap.ic_launcher)
                     .error(R.mipmap.ic_launcher)
                     .into(imageView);
         } else {
-            getActivity().setTitle(R.string.cities);
+            ((MainActivity) getActivity()).getToolbarTitle().setText(R.string.cities);
         }
         return view;
     }
@@ -111,9 +116,6 @@ public class CityFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        getActivity().setTitle(R.string.country);
-        ImageView imageView = ((MainActivity) getActivity()).getImageView();
-        imageView.setImageIcon(null);
         mListener = null;
     }
 

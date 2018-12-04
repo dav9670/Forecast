@@ -20,9 +20,9 @@ import ca.cs.forecast.model.City;
 public class CityRecyclerViewAdapter extends RecyclerView.Adapter<CityRecyclerViewAdapter.ViewHolder> {
 
     private final List<City> mValues;
-    private final OnListFragmentInteractionListener mListener;
+    private final OnItemClickListener mListener;
 
-    public CityRecyclerViewAdapter(List<City> items, OnListFragmentInteractionListener listener) {
+    public CityRecyclerViewAdapter(List<City> items, OnItemClickListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -45,10 +45,14 @@ public class CityRecyclerViewAdapter extends RecyclerView.Adapter<CityRecyclerVi
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onCityListFragmentInteraction(holder.mItem);
+                    mListener.onItemClick(holder.mItem);
                 }
             }
         });
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(City city);
     }
 
     @Override
