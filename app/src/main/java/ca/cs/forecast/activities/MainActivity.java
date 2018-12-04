@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import ca.cs.forecast.R;
 import ca.cs.forecast.data.CityViewModel;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements CountryFragment.O
 
     public final static String TAG = MainActivity.class.getSimpleName();
     private ImageView mImageView = null;
+    private TextView mTitle = null;
 
 
     @Override
@@ -30,7 +32,9 @@ public class MainActivity extends AppCompatActivity implements CountryFragment.O
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mImageView = findViewById(R.id.city_flag_pictureView);
-        setTitle(R.string.country);
+        mTitle = findViewById(R.id.toolbar_title);
+        mTitle.setText(R.string.app_name);
+        setTitle(null);
 
         if (savedInstanceState == null) {
             CountryFragment countryFragment = new CountryFragment();
@@ -78,7 +82,9 @@ public class MainActivity extends AppCompatActivity implements CountryFragment.O
         transaction.commit();
     }
 
-    public ImageView getImageView() {
+    public ImageView getToolbarImageView() {
         return mImageView;
     }
+
+    public TextView getToolbarTitle() {return mTitle;}
 }
