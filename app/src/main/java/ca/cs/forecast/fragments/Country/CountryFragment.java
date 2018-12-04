@@ -1,4 +1,4 @@
-package ca.cs.forecast.fragments;
+package ca.cs.forecast.fragments.Country;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ca.cs.forecast.R;
-import ca.cs.forecast.activities.MainActivity;
 import ca.cs.forecast.data.CountryViewModel;
 import ca.cs.forecast.model.Country;
 
@@ -72,7 +71,7 @@ public class CountryFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             CountryViewModel countryViewModel = ViewModelProviders.of(getActivity()).get(CountryViewModel.class);
-            recyclerView.setAdapter(new CountryRecyclerViewAdapter(countryViewModel.getItemList().getValue(), new CountryRecyclerViewAdapter.OnItemClickListener(){
+            recyclerView.setAdapter(new CountryRecyclerViewAdapter(countryViewModel.getItemList(), new CountryRecyclerViewAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(Country country) {
                     mListener.onCountryListFragmentInteraction(country);
@@ -100,20 +99,6 @@ public class CountryFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnListFragmentInteractionListener {
-        void onCountryListFragmentInteraction(Country country);
     }
 
     @Override
@@ -146,9 +131,25 @@ public class CountryFragment extends Fragment {
         mMenuListener = listener;
     }
 
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p/>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnListFragmentInteractionListener {
+        void onCountryListFragmentInteraction(Country country);
+    }
+
     public interface OnMenuItemClickListener {
         void sortByName();
+
         void sortByContinent();
+
         void sortByPopulation();
     }
 }

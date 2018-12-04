@@ -1,6 +1,5 @@
 package ca.cs.forecast.data;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +9,7 @@ import java.util.List;
 
 public abstract class GenericViewModel<T> extends ViewModel {
     protected MutableLiveData<List<T>> itemList;
-    private int selectedIndex;
+    private T selectedItem;
 
     private List<RecyclerView.Adapter> adapterList;
 
@@ -18,21 +17,21 @@ public abstract class GenericViewModel<T> extends ViewModel {
         adapterList = new ArrayList<>();
     }
 
-    public LiveData<List<T>> getItemList() {
+    public List<T> getItemList() {
         if (itemList == null) {
             itemList = new MutableLiveData<List<T>>();
-            selectedIndex = 0;
+            selectedItem = null;
             loadData();
         }
-        return itemList;
+        return itemList.getValue();
     }
 
     public T getSelectedItem() {
-        return getItemList().getValue().get(selectedIndex);
+        return selectedItem;
     }
 
     public void setSelectedItem(T item) {
-        selectedIndex = getItemList().getValue().indexOf(item);
+        selectedItem = item;
     }
 
     public void removeItem(T item) {

@@ -8,4 +8,5 @@
     <string name="sort_name">Trier par nom</string>
     <string name="sort_continent">Trier par continent</string>
     <string name="sort_population">Trier par population</string>
+    <string name="city_name">Nom de la ville</string>
 </resources>

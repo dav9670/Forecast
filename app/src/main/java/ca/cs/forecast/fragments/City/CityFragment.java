@@ -1,35 +1,25 @@
-package ca.cs.forecast.fragments;
+package ca.cs.forecast.fragments.City;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toolbar;
 
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
-import ca.cs.forecast.ForecastApp;
 import ca.cs.forecast.R;
 import ca.cs.forecast.activities.MainActivity;
+import ca.cs.forecast.data.CityViewModel;
 import ca.cs.forecast.data.CountryViewModel;
-import ca.cs.forecast.fragments.dummy.DummyContent;
-import ca.cs.forecast.fragments.dummy.DummyContent.DummyItem;
+import ca.cs.forecast.model.City;
 import ca.cs.forecast.model.Country;
-
-import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -39,7 +29,6 @@ import java.util.List;
  */
 public class CityFragment extends Fragment {
 
-    private static final String KEY_Country = "country";
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
@@ -53,10 +42,10 @@ public class CityFragment extends Fragment {
     }
 
     @SuppressWarnings("unused")
-    public static CityFragment newInstance(Country country) {
+    public static CityFragment newInstance(int columnCount) {
         CityFragment fragment = new CityFragment();
         Bundle args = new Bundle();
-        args.putString(KEY_Country, country.getCode());
+        args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,9 +53,11 @@ public class CityFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mCountry = ViewModelProviders.of(getActivity()).get(CountryViewModel.class).getSelectedItem();
+
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-            mCountry = ForecastApp.get().getDB().getCountryDao().getByCode(getArguments().getString(KEY_Country));
         }
     }
 
@@ -85,18 +76,21 @@ public class CityFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new CityRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+
+            CityViewModel cityViewModel = ViewModelProviders.of(getActivity()).get(CityViewModel.class);
+            cityViewModel.setCountryCode(mCountry.getCode());
+            recyclerView.setAdapter(new CityRecyclerViewAdapter(cityViewModel.getItemList(), mListener));
         }
-        if(mCountry != null){
+        if (mCountry != null) {
             getActivity().setTitle(getString(R.string.cities) + " - " + mCountry.getName());
 
-            ImageView imageView = ((MainActivity)getActivity()).getImageView();
+            ImageView imageView = ((MainActivity) getActivity()).getImageView();
             String url = "http://www.geognos.com/api/en/countries/flag/*code.png";
             url = url.replace("*code", mCountry.getCode());
             Picasso.with(getContext()).load(url).placeholder(R.mipmap.ic_launcher)
                     .error(R.mipmap.ic_launcher)
                     .into(imageView);
-        }else{
+        } else {
             getActivity().setTitle(R.string.cities);
         }
         return view;
@@ -118,7 +112,7 @@ public class CityFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         getActivity().setTitle(R.string.country);
-        ImageView imageView = ((MainActivity)getActivity()).getImageView();
+        ImageView imageView = ((MainActivity) getActivity()).getImageView();
         imageView.setImageIcon(null);
         mListener = null;
     }
@@ -134,6 +128,6 @@ public class CityFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        void onCityListFragmentInteraction(DummyItem item);
+        void onCityListFragmentInteraction(City item);
     }
 }

@@ -1,4 +1,4 @@
-package ca.cs.forecast.fragments;
+package ca.cs.forecast.fragments.City;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,23 +6,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import ca.cs.forecast.R;
-import ca.cs.forecast.fragments.CityFragment.OnListFragmentInteractionListener;
-import ca.cs.forecast.fragments.dummy.DummyContent.DummyItem;
-
 import java.util.List;
 
+import ca.cs.forecast.R;
+import ca.cs.forecast.fragments.City.CityFragment.OnListFragmentInteractionListener;
+import ca.cs.forecast.model.City;
+
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link City} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class CityRecyclerViewAdapter extends RecyclerView.Adapter<CityRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<City> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public CityRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public CityRecyclerViewAdapter(List<City> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -37,8 +37,7 @@ public class CityRecyclerViewAdapter extends RecyclerView.Adapter<CityRecyclerVi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mcityNameTextView.setText(mValues.get(position).getName());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,20 +58,13 @@ public class CityRecyclerViewAdapter extends RecyclerView.Adapter<CityRecyclerVi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final TextView mcityNameTextView;
+        public City mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
-        }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            mcityNameTextView = view.findViewById(R.id.city_name_textView);
         }
     }
 }
