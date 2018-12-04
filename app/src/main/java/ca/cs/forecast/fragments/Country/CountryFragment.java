@@ -13,8 +13,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import ca.cs.forecast.R;
+import ca.cs.forecast.activities.MainActivity;
 import ca.cs.forecast.data.CountryViewModel;
 import ca.cs.forecast.model.Country;
 
@@ -80,6 +83,9 @@ public class CountryFragment extends Fragment {
         }
 
         setHasOptionsMenu(true);
+
+        ((MainActivity) getActivity()).getToolbarTitle().setText(R.string.country);
+        ((MainActivity) getActivity()).getToolbarImageView().setImageIcon(null);
         return view;
     }
 
