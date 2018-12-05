@@ -6,6 +6,7 @@ package ca.cs.forecast.utils;
 
 public class Constants {
     public static final String BASE_FLAG_URL = "http://www.geognos.com/api/en/countries/flag/%1.png";
+    public static final String BASE_WEATHER_URL = "http://openweathermap.org/img/w/%1.png";
     public static final String WILD_CARD = "%1";
     public static final String FLAG_SUBFOLDER = "/flags/";
 
