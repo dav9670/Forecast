@@ -14,6 +14,13 @@ public class CityViewModel extends GenericViewModel<City> {
 
     @Override
     protected void loadData() {
-        itemList.setValue(ForecastApp.get().getDB().getCityDao().findCitiesForCountryCode(countryCode));
+       if(countryCode == "ALLCITY") {
+           itemList.setValue(ForecastApp.get().getDB().getCityDao().findAllCities());
+       }
+       else{
+           itemList.setValue(ForecastApp.get().getDB().getCityDao().findCitiesForCountryCode(countryCode));
+        }
     }
+
+
 }

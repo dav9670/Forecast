@@ -77,7 +77,8 @@ public class CountryFragment extends Fragment {
             }
             CountryViewModel countryViewModel = ViewModelProviders.of(getActivity()).get(CountryViewModel.class);
             List<Country> countryList = countryViewModel.getItemList();
-            countryList.add(0,new Country(0, "ALLC", getString(R.string.allCities), null, 0));
+            if(countryList.get(0).getCode() != "ALLCITY")
+                countryList.add(0,new Country(0, "ALLCITY", getString(R.string.allCities), null, 0));
             recyclerView.setAdapter(new CountryRecyclerViewAdapter(countryList, new CountryRecyclerViewAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(Country country) {

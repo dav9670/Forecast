@@ -11,7 +11,7 @@ public interface CityDao {
     @Query("SELECT * FROM cities WHERE country_code=:code")
     List<City> findCitiesForCountryCode(final String code);
 
-    @Query("SELECT * FROM cities")
+    @Query("SELECT * FROM cities ORDER BY name")
     List<City> findAllCities();
 
 }
