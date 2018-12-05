@@ -38,7 +38,9 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
             public void sortByName() {
                 CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
                 countryViewModel.setSortMode(CountryViewModel.SORT_MODE.NAME);
-                mValues = countryViewModel.getItemList();
+                List<Country> countryList = countryViewModel.getItemList();
+                countryList.add(0,new Country(0, "ALLC", context.getString(R.string.allCities), null, 0));
+                mValues = countryList;
                 notifyDataSetChanged();
             }
 
@@ -46,7 +48,9 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
             public void sortByContinent() {
                 CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
                 countryViewModel.setSortMode(CountryViewModel.SORT_MODE.CONTINENT);
-                mValues = countryViewModel.getItemList();
+                List<Country> countryList = countryViewModel.getItemList();
+                countryList.add(0,new Country(0, "ALLC", context.getString(R.string.allCities), null, 0));
+                mValues = countryList;
                 notifyDataSetChanged();
             }
 
@@ -54,7 +58,9 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
             public void sortByPopulation() {
                 CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
                 countryViewModel.setSortMode(CountryViewModel.SORT_MODE.POPULATION);
-                mValues = countryViewModel.getItemList();
+                List<Country> countryList = countryViewModel.getItemList();
+                countryList.add(0,new Country(0, "ALLC", context.getString(R.string.allCities), null, 0));
+                mValues = countryList;
                 notifyDataSetChanged();
             }
         });
@@ -78,7 +84,13 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
                 .into(holder.imageView);
         holder.countryNameTextView.setText(mValues.get(position).getName());
         holder.continentNameTextView.setText(mValues.get(position).getContinent());
-        holder.populationSizeTextView.setText(Long.toString(mValues.get(position).getPopulation()));
+        if(mValues.get(position).getCode() == "ALLCITY"){
+            holder.populationSizeTitleTextView.setVisibility(TextView.INVISIBLE);
+            holder.populationSizeTextView.setText("");
+        }else{
+            holder.populationSizeTitleTextView.setVisibility(TextView.VISIBLE);
+            holder.populationSizeTextView.setText(Long.toString(mValues.get(position).getPopulation()));
+        }
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,6 +119,7 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
         public final TextView countryNameTextView;
         public final TextView continentNameTextView;
         public final TextView populationSizeTextView;
+        public final TextView populationSizeTitleTextView;
         public Country mItem;
 
         public ViewHolder(View view) {
@@ -116,6 +129,7 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
             countryNameTextView = view.findViewById(R.id.country_name_textView);
             continentNameTextView = view.findViewById(R.id.continent_name_textView);
             populationSizeTextView = view.findViewById(R.id.population_size_textView);
+            populationSizeTitleTextView = view.findViewById(R.id.population_size_textViewStatic);
         }
     }
 }

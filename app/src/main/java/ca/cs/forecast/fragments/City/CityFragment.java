@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import ca.cs.forecast.utils.Constants;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import ca.cs.forecast.R;
 import ca.cs.forecast.activities.MainActivity;
 import ca.cs.forecast.data.CityViewModel;
