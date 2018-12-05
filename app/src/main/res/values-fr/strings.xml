@@ -10,4 +10,8 @@
     <string name="sort_population">Trier par population</string>
     <string name="city_name">Nom de la ville</string>
     <string name="weather">Météo</string>
+    <string name="pressure">Pression</string>
+    <string name="humidity">Humidité</string>
+    <string name="sunrise">Lever</string>
+    <string name="sunset">Coucher</string>
 </resources>
