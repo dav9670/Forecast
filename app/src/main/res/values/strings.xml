@@ -9,4 +9,6 @@
     <string name="sort_population">Sort by population</string>
     <string name="city_name">City Name</string>
     <string name="weather">Weather</string>
+    <string name="pression">Pression</string>
+    <string name="humidity">Humidity</string>
 </resources>
