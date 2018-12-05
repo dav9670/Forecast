@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import ca.cs.forecast.R;
 import ca.cs.forecast.activities.MainActivity;
 import ca.cs.forecast.data.CountryViewModel;
@@ -74,7 +76,9 @@ public class CountryFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             CountryViewModel countryViewModel = ViewModelProviders.of(getActivity()).get(CountryViewModel.class);
-            recyclerView.setAdapter(new CountryRecyclerViewAdapter(countryViewModel.getItemList(), new CountryRecyclerViewAdapter.OnItemClickListener() {
+            List<Country> countryList = countryViewModel.getItemList();
+            countryList.add(0,new Country(0, "ALLC", getString(R.string.allCities), null, 0));
+            recyclerView.setAdapter(new CountryRecyclerViewAdapter(countryList, new CountryRecyclerViewAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(Country country) {
                     mListener.onCountryListFragmentInteraction(country);

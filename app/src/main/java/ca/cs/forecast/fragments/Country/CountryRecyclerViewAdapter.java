@@ -38,7 +38,9 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
             public void sortByName() {
                 CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
                 countryViewModel.setSortMode(CountryViewModel.SORT_MODE.NAME);
-                mValues = countryViewModel.getItemList();
+                List<Country> countryList = countryViewModel.getItemList();
+                countryList.add(0,new Country(0, "ALLC", context.getString(R.string.allCities), null, 0));
+                mValues = countryList;
                 notifyDataSetChanged();
             }
 
@@ -46,7 +48,9 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
             public void sortByContinent() {
                 CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
                 countryViewModel.setSortMode(CountryViewModel.SORT_MODE.CONTINENT);
-                mValues = countryViewModel.getItemList();
+                List<Country> countryList = countryViewModel.getItemList();
+                countryList.add(0,new Country(0, "ALLC", context.getString(R.string.allCities), null, 0));
+                mValues = countryList;
                 notifyDataSetChanged();
             }
 
@@ -54,7 +58,9 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
             public void sortByPopulation() {
                 CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
                 countryViewModel.setSortMode(CountryViewModel.SORT_MODE.POPULATION);
-                mValues = countryViewModel.getItemList();
+                List<Country> countryList = countryViewModel.getItemList();
+                countryList.add(0,new Country(0, "ALLC", context.getString(R.string.allCities), null, 0));
+                mValues = countryList;
                 notifyDataSetChanged();
             }
         });
