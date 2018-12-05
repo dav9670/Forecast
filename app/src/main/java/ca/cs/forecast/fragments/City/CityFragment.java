@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import ca.cs.forecast.utils.Constants;
 import com.squareup.picasso.Picasso;
 
 import ca.cs.forecast.R;
@@ -90,8 +91,8 @@ public class CityFragment extends Fragment {
             ((MainActivity) getActivity()).getToolbarTitle().setText(getString(R.string.cities) + " - " + mCountry.getName());
 
             ImageView imageView = ((MainActivity) getActivity()).getToolbarImageView();
-            String url = "http://www.geognos.com/api/en/countries/flag/*code.png";
-            url = url.replace("*code", mCountry.getCode());
+            String url = Constants.BASE_FLAG_URL;
+            url = url.replace(Constants.WILD_CARD, mCountry.getCode());
             Picasso.with(getContext()).load(url).placeholder(R.mipmap.ic_launcher)
                     .error(R.mipmap.ic_launcher)
                     .into(imageView);
