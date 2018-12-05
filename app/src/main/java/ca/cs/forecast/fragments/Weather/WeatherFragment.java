@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.picasso.RequestCreator;
 
 import java.util.Date;
 import java.util.Objects;
@@ -93,12 +95,13 @@ public class WeatherFragment extends Fragment implements OnMapReadyCallback, Wea
 
 	@SuppressLint("ClickableViewAccessibility")
 	@Override
-	public void onDownloadComplete(WeatherCity weatherCity) {
+	public void onDownloadComplete(WeatherCity weatherCity, RequestCreator icon) {
 		FragmentActivity activity = getActivity();
 		if (activity != null) {
 			Main main = weatherCity.getMain();
 
 			// Views
+			ImageView imageView = ((MainActivity) activity).getToolbarImageView();
 			TextView temperature = activity.findViewById(R.id.temperature_textview);
 			TextView description = activity.findViewById(R.id.description_textview);
 			SeekBar pressure_bar = activity.findViewById(R.id.pression_progressBar);
@@ -112,11 +115,14 @@ public class WeatherFragment extends Fragment implements OnMapReadyCallback, Wea
 			pressure_bar.setOnTouchListener((v, event) -> true);
 			humidity_bar.setOnTouchListener((v, event) -> true);
 
+
 			// Values
 			String sTemp = String.format("%s°C", main.getTemp());
 			String sDesc = weatherCity.getWeather().get(0).getDescription();
+
 			int iPressure = (int) (main.getPressure());
 			String sPressure = String.format("%skPa", main.getPressure() / 10);
+
 			int iHumidity = (int) (main.getHumidity());
 			String sHumidity = String.format("%s%%", main.getHumidity());
 
@@ -127,7 +133,11 @@ public class WeatherFragment extends Fragment implements OnMapReadyCallback, Wea
 			String sSunrise = String.format("%s: %s", getString(R.string.sunrise), dateFormat.format(sunrise_date));
 			String sSunset = String.format("%s: %s", getString(R.string.sunset), dateFormat.format(sunset_date));
 
-			// Set Views' values
+
+			// Set Views' value
+            icon.placeholder(R.mipmap.ic_launcher)
+                    .error(R.mipmap.ic_launcher)
+                    .into(imageView);
 			temperature.setText(sTemp);
 			description.setText(sDesc);
 			pressure_bar.setProgress(iPressure);
