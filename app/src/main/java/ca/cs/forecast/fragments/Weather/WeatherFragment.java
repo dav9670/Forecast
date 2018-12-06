@@ -117,14 +117,14 @@ public class WeatherFragment extends Fragment implements OnMapReadyCallback, Wea
 
 
 			// Values
-			String sTemp = String.format("%s°C", main.getTemp());
+			String sTemp = String.format("%s°C", (float)Math.round(main.getTemp() * 10) / 10f);
 			String sDesc = weatherCity.getWeather().get(0).getDescription();
 
 			int iPressure = (int) (main.getPressure());
-			String sPressure = String.format("%skPa", main.getPressure() / 10);
+			String sPressure = String.format("%skPa", (float)Math.round(main.getPressure()) / 10f);
 
 			int iHumidity = (int) (main.getHumidity());
-			String sHumidity = String.format("%s%%", main.getHumidity());
+			String sHumidity = String.format("%s%%", (float)Math.round(main.getHumidity() * 10) / 10f);
 
 			SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
 			Date sunrise_date = new Date((long) weatherCity.getSys().getSunrise() * 1000);
