@@ -9,20 +9,12 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import ca.cs.forecast.R;
-import ca.cs.forecast.activities.MainActivity;
-import ca.cs.forecast.asynctasks.WeatherDownloadAsyncTask;
-import ca.cs.forecast.data.CityViewModel;
-import ca.cs.forecast.model.City;
-import ca.cs.forecast.model.Weather.Main;
-import ca.cs.forecast.model.Weather.WeatherCity;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -33,6 +25,14 @@ import com.squareup.picasso.RequestCreator;
 
 import java.util.Date;
 import java.util.Objects;
+
+import ca.cs.forecast.R;
+import ca.cs.forecast.activities.MainActivity;
+import ca.cs.forecast.asynctasks.WeatherDownloadAsyncTask;
+import ca.cs.forecast.data.CityViewModel;
+import ca.cs.forecast.model.City;
+import ca.cs.forecast.model.Weather.Main;
+import ca.cs.forecast.model.Weather.WeatherCity;
 
 public class WeatherFragment extends Fragment implements OnMapReadyCallback, WeatherDownloadAsyncTask.Callback {
 
@@ -117,7 +117,7 @@ public class WeatherFragment extends Fragment implements OnMapReadyCallback, Wea
 
 
 			// Values
-			String sTemp = String.format("%s°C", main.getTemp());
+			String sTemp = String.format("%s°C", Math.round(main.getTemp() * 10) / 10);
 			String sDesc = weatherCity.getWeather().get(0).getDescription();
 
 			int iPressure = (int) (main.getPressure());

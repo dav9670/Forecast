@@ -12,10 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import ca.cs.forecast.utils.Constants;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 import ca.cs.forecast.R;
 import ca.cs.forecast.activities.MainActivity;
@@ -23,6 +20,7 @@ import ca.cs.forecast.data.CityViewModel;
 import ca.cs.forecast.data.CountryViewModel;
 import ca.cs.forecast.model.City;
 import ca.cs.forecast.model.Country;
+import ca.cs.forecast.utils.Constants;
 
 /**
  * A fragment representing a list of Items.
@@ -42,15 +40,6 @@ public class CityFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public CityFragment() {
-    }
-
-    @SuppressWarnings("unused")
-    public static CityFragment newInstance(int columnCount) {
-        CityFragment fragment = new CityFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -82,12 +71,7 @@ public class CityFragment extends Fragment {
 
             CityViewModel cityViewModel = ViewModelProviders.of(getActivity()).get(CityViewModel.class);
             cityViewModel.setCountryCode(mCountry.getCode());
-            recyclerView.setAdapter(new CityRecyclerViewAdapter(cityViewModel.getItemList(), new CityRecyclerViewAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(City city) {
-                    mListener.onCityListFragmentInteraction(city);
-                }
-            }));
+            recyclerView.setAdapter(new CityRecyclerViewAdapter(cityViewModel.getItemList(), city -> mListener.onCityListFragmentInteraction(city)));
         }
         if (mCountry != null) {
             ((MainActivity) getActivity()).getToolbarTitle().setText(getString(R.string.cities) + " - " + mCountry.getName());
