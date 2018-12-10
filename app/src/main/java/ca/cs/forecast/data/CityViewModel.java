@@ -7,6 +7,12 @@ public class CityViewModel extends GenericViewModel<City> {
 
     private String countryCode;
 
+    /**
+     * Set the country code to specify which cities will be loaded
+     *
+     * @param countryCode
+     */
+
     public void setCountryCode(String countryCode) {
         itemList = null;
         this.countryCode = countryCode;

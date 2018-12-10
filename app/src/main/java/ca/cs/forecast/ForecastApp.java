@@ -40,6 +40,9 @@ public class ForecastApp extends Application {
         importDatabaseIfNeeded();
     }
 
+    /**
+     * If country/city database is not created on device, creates it as file so that Room can use it
+     */
     private void importDatabaseIfNeeded() {
 
         final File dbPath = getApplicationContext().getDatabasePath(Constants.DATABASE_NAME);

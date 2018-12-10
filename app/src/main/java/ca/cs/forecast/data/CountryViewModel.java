@@ -25,6 +25,11 @@ public class CountryViewModel extends GenericViewModel<Country> {
         }
     }
 
+    /**
+     * Reload the data set with the load order specified
+     *
+     * @param sortMode
+     */
     public void setSortMode(SORT_MODE sortMode) {
         this.sortMode = sortMode;
         loadData();

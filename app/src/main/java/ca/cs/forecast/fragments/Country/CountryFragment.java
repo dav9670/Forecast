@@ -13,8 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -41,15 +39,6 @@ public class CountryFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public CountryFragment() {
-    }
-
-    @SuppressWarnings("unused")
-    public static CountryFragment newInstance(int columnCount) {
-        CountryFragment fragment = new CountryFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override

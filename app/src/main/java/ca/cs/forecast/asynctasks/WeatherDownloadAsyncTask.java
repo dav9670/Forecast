@@ -10,6 +10,7 @@ import com.squareup.picasso.RequestCreator;
 import retrofit2.Call;
 
 import java.io.IOException;
+import java.util.Locale;
 
 public class WeatherDownloadAsyncTask extends AsyncTask<Integer, Void, String> {
     private Callback callback;
@@ -24,7 +25,7 @@ public class WeatherDownloadAsyncTask extends AsyncTask<Integer, Void, String> {
 	protected String doInBackground(Integer... integers) {
 		int cityId = integers[0];
 
-		Call<WeatherCity> weatherCityCall = RetrofitClient.getAPIService().fetchWeatherCity(cityId, Constants.OpenWeatherMap.APP_ID);
+		Call<WeatherCity> weatherCityCall = RetrofitClient.getAPIService().fetchWeatherCity(cityId, Constants.OpenWeatherMap.APP_ID, Locale.getDefault().getLanguage());
 		try {
 			this.weatherCity = weatherCityCall.execute().body();
 
@@ -49,6 +50,12 @@ public class WeatherDownloadAsyncTask extends AsyncTask<Integer, Void, String> {
 	}
 
 	public interface Callback {
+		/**
+		 * Sends information to the class responsible of displaying it
+		 *
+		 * @param weatherCity Contains all the information needed for the Weather
+		 * @param icon        The weather's icon
+		 */
 		void onDownloadComplete(WeatherCity weatherCity, RequestCreator icon);
 	}
 }

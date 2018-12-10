@@ -17,6 +17,11 @@ public abstract class GenericViewModel<T> extends ViewModel {
         adapterList = new ArrayList<>();
     }
 
+    /**
+     * If data has not already been loaded, loads the data, then return the data
+     *
+     * @return A list of object of type T
+     */
     public List<T> getItemList() {
         if (itemList == null) {
             itemList = new MutableLiveData<List<T>>();
@@ -34,6 +39,10 @@ public abstract class GenericViewModel<T> extends ViewModel {
         selectedItem = item;
     }
 
+    /**
+     * Remove item from data list, and notify all adapters of the index of the item that has been removed
+     * @param item
+     */
     public void removeItem(T item) {
         for (RecyclerView.Adapter adapter : adapterList) {
             adapter.notifyItemRemoved(itemList.getValue().indexOf(item));
