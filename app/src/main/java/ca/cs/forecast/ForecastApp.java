@@ -41,7 +41,7 @@ public class ForecastApp extends Application {
     }
 
     /**
-     * If country/city database is not created on device, creates it as file so that Room can use it
+     * If database is not created on device, creates it as file so that Room can use it
      */
     private void importDatabaseIfNeeded() {
 
