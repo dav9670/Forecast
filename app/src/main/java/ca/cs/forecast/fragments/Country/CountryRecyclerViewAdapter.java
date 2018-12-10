@@ -36,34 +36,33 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
         fragment.setOnMenuItemClickListener(new CountryFragment.OnMenuItemClickListener() {
             @Override
             public void sortByName() {
-                CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
-                countryViewModel.setSortMode(CountryViewModel.SORT_MODE.NAME);
-                List<Country> countryList = countryViewModel.getItemList();
-                countryList.add(0,new Country(0, "ALLC", context.getString(R.string.allCities), null, 0));
-                mValues = countryList;
-                notifyDataSetChanged();
+                setSortOrder(CountryViewModel.SORT_MODE.NAME);
             }
 
             @Override
             public void sortByContinent() {
-                CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
-                countryViewModel.setSortMode(CountryViewModel.SORT_MODE.CONTINENT);
-                List<Country> countryList = countryViewModel.getItemList();
-                countryList.add(0,new Country(0, "ALLC", context.getString(R.string.allCities), null, 0));
-                mValues = countryList;
-                notifyDataSetChanged();
+                setSortOrder(CountryViewModel.SORT_MODE.CONTINENT);
             }
 
             @Override
             public void sortByPopulation() {
-                CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
-                countryViewModel.setSortMode(CountryViewModel.SORT_MODE.POPULATION);
-                List<Country> countryList = countryViewModel.getItemList();
-                countryList.add(0,new Country(0, "ALLC", context.getString(R.string.allCities), null, 0));
-                mValues = countryList;
-                notifyDataSetChanged();
+                setSortOrder(CountryViewModel.SORT_MODE.POPULATION);
             }
         });
+    }
+
+    /**
+     * Used to set the sort order of the country list
+     *
+     * @param sort_mode
+     */
+    private void setSortOrder(CountryViewModel.SORT_MODE sort_mode) {
+        CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
+        countryViewModel.setSortMode(sort_mode);
+        List<Country> countryList = countryViewModel.getItemList();
+        countryList.add(0, new Country(0, "ALLC", mContext.getString(R.string.allCities), null, 0));
+        mValues = countryList;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -109,6 +108,9 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
         return mValues.size();
     }
 
+    /**
+     * The interface which is called when an item of the recyclerView is clicked
+     */
     public interface OnItemClickListener {
         void onItemClick(Country country);
     }

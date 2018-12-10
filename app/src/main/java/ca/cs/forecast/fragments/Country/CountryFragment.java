@@ -145,6 +145,9 @@ public class CountryFragment extends Fragment {
         void onCountryListFragmentInteraction(Country country);
     }
 
+    /**
+     * This interface is used to sort the data contained inside of the adapter
+     */
     public interface OnMenuItemClickListener {
         void sortByName();
 
