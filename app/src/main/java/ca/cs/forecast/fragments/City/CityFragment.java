@@ -78,19 +78,18 @@ public class CityFragment extends Fragment implements CityViewModel.Callback {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                CityViewModel cityViewModel = ViewModelProviders.of((FragmentActivity) getContext()).get(CityViewModel.class);
+                cityViewModel.setCountryCode(mCountry.getCode());
+
                 if(newText.length() > 0){
-                    CityViewModel cityViewModel = ViewModelProviders.of((FragmentActivity) getContext()).get(CityViewModel.class);
-                    cityViewModel.setCountryCode(mCountry.getCode());
                     cityViewModel.setSearchMode(CityViewModel.SEARCH_MODE.NAME);
                     cityViewModel.setSearchText(newText);
-                    cityViewModel.setCallback(CityFragment.this);
                 }else{
-                    CityViewModel cityViewModel = ViewModelProviders.of((FragmentActivity) getContext()).get(CityViewModel.class);
-                    cityViewModel.setCountryCode(mCountry.getCode());
                     cityViewModel.setSearchMode(CityViewModel.SEARCH_MODE.NONE);
                     cityViewModel.setSearchText("");
-                    cityViewModel.setCallback(CityFragment.this);
                 }
+
+                cityViewModel.setCallback(CityFragment.this);
                 return false;
             }
 
