@@ -103,11 +103,9 @@ public class CityFragment extends Fragment implements CityViewModel.Callback {
         recyclerViewAdapter = new CityRecyclerViewAdapter(new ArrayList<>(), city -> mListener.onCityListFragmentInteraction(city));
         recyclerView.setAdapter(recyclerViewAdapter);
 
-        CityViewModel cityViewModel = ViewModelProviders.of((FragmentActivity) context).get(CityViewModel.class);
-        cityViewModel.setCountryCode(mCountry.getCode());
-        cityViewModel.setSearchMode(CityViewModel.SEARCH_MODE.NONE);
-        cityViewModel.setSearchText("");
-        cityViewModel.setCallback(this);
+        if(savedInstanceState == null){
+            searchView.setQuery("", false);
+        }
 
 
         if (mCountry != null) {

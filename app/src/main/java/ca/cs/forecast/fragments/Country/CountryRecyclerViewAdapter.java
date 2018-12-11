@@ -57,20 +57,6 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
         });
     }
 
-    /**
-     * Used to set the sort order of the country list
-     *
-     * @param sort_mode
-     */
-    private void setSortOrder(CountryViewModel.SORT_MODE sort_mode) {
-        CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
-        countryViewModel.setSortMode(sort_mode);
-        List<Country> countryList = countryViewModel.getItemList();
-        countryList.add(0, new Country(0, "ALLC", mContext.getString(R.string.allCities), null, 0));
-        mValues = countryList;
-        notifyDataSetChanged();
-    }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
