@@ -15,11 +15,10 @@ import ca.cs.forecast.model.City;
 /**
  * {@link RecyclerView.Adapter} that can display a {@link City} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
  */
 public class CityRecyclerViewAdapter extends RecyclerView.Adapter<CityRecyclerViewAdapter.ViewHolder> {
 
-    private final List<City> mValues;
+    private List<City> mValues;
     private final OnItemClickListener mListener;
 
     public CityRecyclerViewAdapter(List<City> items, OnItemClickListener listener) {
@@ -70,5 +69,15 @@ public class CityRecyclerViewAdapter extends RecyclerView.Adapter<CityRecyclerVi
             mView = view;
             mcityNameTextView = view.findViewById(R.id.city_name_textView);
         }
+    }
+
+    /**
+     * Set values of recycleView and notify the change
+     *
+     * @param cities    List of cities
+     */
+    public void setValues(List<City> cities){
+        mValues = cities;
+        notifyDataSetChanged();
     }
 }

@@ -38,30 +38,21 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
             public void sortByName() {
                 CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
                 countryViewModel.setSortMode(CountryViewModel.SORT_MODE.NAME);
-                List<Country> countryList = countryViewModel.getItemList();
-                countryList.add(0,new Country(0, "ALLC", context.getString(R.string.allCities), null, 0));
-                mValues = countryList;
-                notifyDataSetChanged();
+                countryViewModel.setCallback(fragment);
             }
 
             @Override
             public void sortByContinent() {
                 CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
                 countryViewModel.setSortMode(CountryViewModel.SORT_MODE.CONTINENT);
-                List<Country> countryList = countryViewModel.getItemList();
-                countryList.add(0,new Country(0, "ALLC", context.getString(R.string.allCities), null, 0));
-                mValues = countryList;
-                notifyDataSetChanged();
+                countryViewModel.setCallback(fragment);
             }
 
             @Override
             public void sortByPopulation() {
                 CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
                 countryViewModel.setSortMode(CountryViewModel.SORT_MODE.POPULATION);
-                List<Country> countryList = countryViewModel.getItemList();
-                countryList.add(0,new Country(0, "ALLC", context.getString(R.string.allCities), null, 0));
-                mValues = countryList;
-                notifyDataSetChanged();
+                countryViewModel.setCallback(fragment);
             }
         });
     }
@@ -131,5 +122,15 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
             populationSizeTextView = view.findViewById(R.id.population_size_textView);
             populationSizeTitleTextView = view.findViewById(R.id.population_size_textViewStatic);
         }
+    }
+
+    /**
+     * Set values of recycleView and notify the change
+     *
+     * @param countries    List of countries
+     */
+    public void setValues(List<Country> countries){
+        mValues = countries;
+        notifyDataSetChanged();
     }
 }

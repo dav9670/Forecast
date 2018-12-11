@@ -1,5 +1,6 @@
 package ca.cs.forecast.model;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Query;
 
@@ -9,18 +10,15 @@ import java.util.List;
 public interface CountryDao {
 
     @Query("SELECT * FROM countries")
-    List<Country> getAll();
+    LiveData<List<Country>> getAll();
 
     @Query("SELECT * FROM countries ORDER BY name")
-    List<Country> getAllByName();
+    LiveData<List<Country>> getAllByName();
 
     @Query("SELECT * FROM countries ORDER BY continent")
-    List<Country> getAllByContinent();
+    LiveData<List<Country>> getAllByContinent();
 
     @Query("SELECT * FROM countries ORDER BY population")
-    List<Country> getAllByPopulation();
-
-    @Query("SELECT * FROM countries WHERE code = :code")
-    Country getByCode(String code);
+    LiveData<List<Country>> getAllByPopulation();
 
 }
