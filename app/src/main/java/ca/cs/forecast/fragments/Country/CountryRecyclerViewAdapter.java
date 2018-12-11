@@ -36,17 +36,23 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
         fragment.setOnMenuItemClickListener(new CountryFragment.OnMenuItemClickListener() {
             @Override
             public void sortByName() {
-                setSortOrder(CountryViewModel.SORT_MODE.NAME);
+                CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
+                countryViewModel.setSortMode(CountryViewModel.SORT_MODE.NAME);
+                countryViewModel.setCallback(fragment);
             }
 
             @Override
             public void sortByContinent() {
-                setSortOrder(CountryViewModel.SORT_MODE.CONTINENT);
+                CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
+                countryViewModel.setSortMode(CountryViewModel.SORT_MODE.CONTINENT);
+                countryViewModel.setCallback(fragment);
             }
 
             @Override
             public void sortByPopulation() {
-                setSortOrder(CountryViewModel.SORT_MODE.POPULATION);
+                CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
+                countryViewModel.setSortMode(CountryViewModel.SORT_MODE.POPULATION);
+                countryViewModel.setCallback(fragment);
             }
         });
     }
@@ -133,5 +139,15 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
             populationSizeTextView = view.findViewById(R.id.population_size_textView);
             populationSizeTitleTextView = view.findViewById(R.id.population_size_textViewStatic);
         }
+    }
+
+    /**
+     * Set values of recycleView and notify the change
+     *
+     * @param countries    List of countries
+     */
+    public void setValues(List<Country> countries){
+        mValues = countries;
+        notifyDataSetChanged();
     }
 }

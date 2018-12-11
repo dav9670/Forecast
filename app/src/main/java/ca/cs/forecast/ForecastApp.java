@@ -31,8 +31,6 @@ public class ForecastApp extends Application {
         super.onCreate();
 
         mDatabase = Room.databaseBuilder(getApplicationContext(), WorldDatabase.class, Constants.DATABASE_NAME)
-                //TODO: .allowMainThreadQueries() doit OBLIGATOIREMENT être retiré.
-                .allowMainThreadQueries()
                 .build();
 
         sInstance = this;

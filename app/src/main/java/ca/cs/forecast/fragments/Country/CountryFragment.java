@@ -14,11 +14,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ca.cs.forecast.R;
 import ca.cs.forecast.activities.MainActivity;
 import ca.cs.forecast.data.CountryViewModel;
+import ca.cs.forecast.fragments.City.CityRecyclerViewAdapter;
 import ca.cs.forecast.model.Country;
 
 /**
@@ -27,12 +29,13 @@ import ca.cs.forecast.model.Country;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class CountryFragment extends Fragment {
+public class CountryFragment extends Fragment implements CountryViewModel.Callback {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
     private OnMenuItemClickListener mMenuListener;
     private OnListFragmentInteractionListener mListener;
+    private CountryRecyclerViewAdapter recyclerViewAdapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -64,16 +67,14 @@ public class CountryFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
+
+            recyclerViewAdapter = new CountryRecyclerViewAdapter(new ArrayList<>(), country -> mListener.onCountryListFragmentInteraction(country), getContext(), this);
+            recyclerView.setAdapter(recyclerViewAdapter);
+
+
             CountryViewModel countryViewModel = ViewModelProviders.of(getActivity()).get(CountryViewModel.class);
-            List<Country> countryList = countryViewModel.getItemList();
-            if(countryList.get(0).getCode() != "ALLCITY")
-                countryList.add(0,new Country(0, "ALLCITY", getString(R.string.allCities), null, 0));
-            recyclerView.setAdapter(new CountryRecyclerViewAdapter(countryList, new CountryRecyclerViewAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(Country country) {
-                    mListener.onCountryListFragmentInteraction(country);
-                }
-            }, getContext(), this));
+            countryViewModel.setSortMode(CountryViewModel.SORT_MODE.DEFAULT);
+            countryViewModel.setCallback(this);
         }
 
         setHasOptionsMenu(true);
@@ -129,6 +130,13 @@ public class CountryFragment extends Fragment {
 
     public void setOnMenuItemClickListener(OnMenuItemClickListener listener) {
         mMenuListener = listener;
+    }
+
+    @Override
+    public void onCountryReceive(List<Country> countries) {
+        if(countries.get(0).getCode() != "ALLCITY")
+            countries.add(0,new Country(0, "ALLCITY", getString(R.string.allCities), null, 0));
+        recyclerViewAdapter.setValues(countries);
     }
 
     /**

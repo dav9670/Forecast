@@ -1,19 +1,26 @@
 package ca.cs.forecast.fragments.City;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SearchView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ca.cs.forecast.ForecastApp;
 import ca.cs.forecast.R;
 import ca.cs.forecast.activities.MainActivity;
 import ca.cs.forecast.data.CityViewModel;
@@ -28,12 +35,13 @@ import ca.cs.forecast.utils.Constants;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class CityFragment extends Fragment {
+public class CityFragment extends Fragment implements CityViewModel.Callback {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private Country mCountry = null;
+    private CityRecyclerViewAdapter recyclerViewAdapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -59,20 +67,49 @@ public class CityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_city_list, container, false);
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+        SearchView searchView = view.findViewById(R.id.searchView);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
             }
 
-            CityViewModel cityViewModel = ViewModelProviders.of(getActivity()).get(CityViewModel.class);
-            cityViewModel.setCountryCode(mCountry.getCode());
-            recyclerView.setAdapter(new CityRecyclerViewAdapter(cityViewModel.getItemList(), city -> mListener.onCityListFragmentInteraction(city)));
-        }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                CityViewModel cityViewModel = ViewModelProviders.of((FragmentActivity) getContext()).get(CityViewModel.class);
+                cityViewModel.setCountryCode(mCountry.getCode());
+
+                if(newText.length() > 0){
+                    cityViewModel.setSearchMode(CityViewModel.SEARCH_MODE.NAME);
+                    cityViewModel.setSearchText(newText);
+                }else{
+                    cityViewModel.setSearchMode(CityViewModel.SEARCH_MODE.NONE);
+                    cityViewModel.setSearchText("");
+                }
+
+                cityViewModel.setCallback(CityFragment.this);
+                return false;
+            }
+
+        });
+
+        // Set the adapter
+        Context context = view.getContext();
+        RecyclerView recyclerView = view.findViewById(R.id.listCity);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+        recyclerViewAdapter = new CityRecyclerViewAdapter(new ArrayList<>(), city -> mListener.onCityListFragmentInteraction(city));
+        recyclerView.setAdapter(recyclerViewAdapter);
+
+        CityViewModel cityViewModel = ViewModelProviders.of((FragmentActivity) context).get(CityViewModel.class);
+        cityViewModel.setCountryCode(mCountry.getCode());
+        cityViewModel.setSearchMode(CityViewModel.SEARCH_MODE.NONE);
+        cityViewModel.setSearchText("");
+        cityViewModel.setCallback(this);
+
+
         if (mCountry != null) {
             ((MainActivity) getActivity()).getToolbarTitle().setText(getString(R.string.cities) + " - " + mCountry.getName());
 
@@ -104,6 +141,11 @@ public class CityFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onCityReceive(List<City> cities) {
+        recyclerViewAdapter.setValues(cities);
     }
 
     /**
