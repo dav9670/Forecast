@@ -50,6 +50,9 @@ public class CityRecyclerViewAdapter extends RecyclerView.Adapter<CityRecyclerVi
         });
     }
 
+    /**
+     * The interface which is called when an item of the recyclerView is clicked
+     */
     public interface OnItemClickListener {
         void onItemClick(City city);
     }

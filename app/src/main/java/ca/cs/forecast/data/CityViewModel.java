@@ -25,7 +25,6 @@ public class CityViewModel extends GenericViewModel<City> {
      *
      * @param countryCode
      */
-
     public void setCountryCode(String countryCode) {
         itemList = null;
         this.countryCode = countryCode;

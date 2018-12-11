@@ -28,6 +28,7 @@ public abstract class GenericViewModel<T> extends ViewModel {
 
     /**
      * Remove item from data list, and notify all adapters of the index of the item that has been removed
+     *
      * @param item
      */
     public void removeItem(T item) {
@@ -49,5 +50,8 @@ public abstract class GenericViewModel<T> extends ViewModel {
         adapterList.clear();
     }
 
+    /**
+     * The function which will be called if the itemList is null, to populate the data
+     */
     protected abstract void loadData();
 }
