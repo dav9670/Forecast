@@ -15,10 +15,10 @@ public interface CountryDao {
     @Query("SELECT * FROM countries ORDER BY name")
     LiveData<List<Country>> getAllByName();
 
-    @Query("SELECT * FROM countries ORDER BY continent")
+    @Query("SELECT * FROM countries ORDER BY continent, name")
     LiveData<List<Country>> getAllByContinent();
 
-    @Query("SELECT * FROM countries ORDER BY population")
+    @Query("SELECT * FROM countries ORDER BY population, name")
     LiveData<List<Country>> getAllByPopulation();
 
 }

@@ -36,6 +36,7 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
         fragment.setOnMenuItemClickListener(new CountryFragment.OnMenuItemClickListener() {
             @Override
             public void sortByName() {
+                fragment.setSortMode(CountryViewModel.SORT_MODE.NAME);
                 CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
                 countryViewModel.setSortMode(CountryViewModel.SORT_MODE.NAME);
                 countryViewModel.setCallback(fragment);
@@ -43,6 +44,7 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
 
             @Override
             public void sortByContinent() {
+                fragment.setSortMode(CountryViewModel.SORT_MODE.CONTINENT);
                 CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
                 countryViewModel.setSortMode(CountryViewModel.SORT_MODE.CONTINENT);
                 countryViewModel.setCallback(fragment);
@@ -50,25 +52,12 @@ public class CountryRecyclerViewAdapter extends RecyclerView.Adapter<CountryRecy
 
             @Override
             public void sortByPopulation() {
+                fragment.setSortMode(CountryViewModel.SORT_MODE.POPULATION);
                 CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
                 countryViewModel.setSortMode(CountryViewModel.SORT_MODE.POPULATION);
                 countryViewModel.setCallback(fragment);
             }
         });
-    }
-
-    /**
-     * Used to set the sort order of the country list
-     *
-     * @param sort_mode
-     */
-    private void setSortOrder(CountryViewModel.SORT_MODE sort_mode) {
-        CountryViewModel countryViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(CountryViewModel.class);
-        countryViewModel.setSortMode(sort_mode);
-        List<Country> countryList = countryViewModel.getItemList();
-        countryList.add(0, new Country(0, "ALLC", mContext.getString(R.string.allCities), null, 0));
-        mValues = countryList;
-        notifyDataSetChanged();
     }
 
     @Override
