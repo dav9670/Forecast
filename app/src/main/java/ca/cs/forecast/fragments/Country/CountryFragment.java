@@ -76,10 +76,11 @@ public class CountryFragment extends Fragment implements CountryViewModel.Callba
 
 
             CountryViewModel countryViewModel = ViewModelProviders.of(getActivity()).get(CountryViewModel.class);
-            if(savedInstanceState == null) {
-                mSortMode = CountryViewModel.SORT_MODE.DEFAULT;
-            }else{
+            if(savedInstanceState != null) {
                 mSortMode = (CountryViewModel.SORT_MODE) savedInstanceState.get(SORT_MODE_INSTANCE);
+            }
+            if(mSortMode == null){
+                mSortMode = CountryViewModel.SORT_MODE.DEFAULT;
             }
             countryViewModel.setSortMode(mSortMode);
             countryViewModel.setCallback(this);
