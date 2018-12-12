@@ -3,6 +3,7 @@ package ca.cs.forecast.fragments.Country;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,10 +33,12 @@ import ca.cs.forecast.model.Country;
 public class CountryFragment extends Fragment implements CountryViewModel.Callback {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
+    private static final String SORT_MODE_INSTANCE = "sortMode";
     private int mColumnCount = 1;
     private OnMenuItemClickListener mMenuListener;
     private OnListFragmentInteractionListener mListener;
-    private CountryRecyclerViewAdapter recyclerViewAdapter;
+    private CountryRecyclerViewAdapter mRecyclerViewAdapter;
+    private CountryViewModel.SORT_MODE mSortMode;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -68,12 +71,17 @@ public class CountryFragment extends Fragment implements CountryViewModel.Callba
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            recyclerViewAdapter = new CountryRecyclerViewAdapter(new ArrayList<>(), country -> mListener.onCountryListFragmentInteraction(country), getContext(), this);
-            recyclerView.setAdapter(recyclerViewAdapter);
+            mRecyclerViewAdapter = new CountryRecyclerViewAdapter(new ArrayList<>(), country -> mListener.onCountryListFragmentInteraction(country), getContext(), this);
+            recyclerView.setAdapter(mRecyclerViewAdapter);
 
 
             CountryViewModel countryViewModel = ViewModelProviders.of(getActivity()).get(CountryViewModel.class);
-            countryViewModel.setSortMode(CountryViewModel.SORT_MODE.DEFAULT);
+            if(savedInstanceState == null) {
+                mSortMode = CountryViewModel.SORT_MODE.DEFAULT;
+            }else{
+                mSortMode = (CountryViewModel.SORT_MODE) savedInstanceState.get(SORT_MODE_INSTANCE);
+            }
+            countryViewModel.setSortMode(mSortMode);
             countryViewModel.setCallback(this);
         }
 
@@ -128,15 +136,40 @@ public class CountryFragment extends Fragment implements CountryViewModel.Callba
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(SORT_MODE_INSTANCE, mSortMode);
+    }
+
+    /**
+     * Set the menu listener
+     *
+     * @param  listener  new listener
+     */
     public void setOnMenuItemClickListener(OnMenuItemClickListener listener) {
         mMenuListener = listener;
     }
 
+
+    /**
+     * Set the menu sort mode to save it in fragment
+     *
+     * @param  sortMode  new sort mode
+     */
+    public void setSortMode(CountryViewModel.SORT_MODE sortMode){
+        mSortMode = sortMode;
+    }
+
+    /**
+     * Show the countries when they are receive and add option all countries at the list beginning
+     *
+     * @param  countries  list of countries
+     */
     @Override
     public void onCountryReceive(List<Country> countries) {
-        if(countries.get(0).getCode() != "ALLCITY")
-            countries.add(0,new Country(0, "ALLCITY", getString(R.string.allCities), null, 0));
-        recyclerViewAdapter.setValues(countries);
+        countries.add(0,new Country(0, "ALLCITY", getString(R.string.allCities), null, 0));
+        mRecyclerViewAdapter.setValues(countries);
     }
 
     /**

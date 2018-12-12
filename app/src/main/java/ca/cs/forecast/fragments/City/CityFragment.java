@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -141,6 +142,11 @@ public class CityFragment extends Fragment implements CityViewModel.Callback {
         mListener = null;
     }
 
+    /**
+     * Show the cities when they are receive
+     *
+     * @param  cities  list of cities
+     */
     @Override
     public void onCityReceive(List<City> cities) {
         recyclerViewAdapter.setValues(cities);

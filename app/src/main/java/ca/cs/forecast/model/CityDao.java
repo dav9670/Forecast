@@ -9,7 +9,7 @@ import java.util.List;
 @Dao
 public interface CityDao {
 
-    @Query("SELECT * FROM cities WHERE country_code=:code")
+    @Query("SELECT * FROM cities WHERE country_code=:code ORDER BY name")
     LiveData<List<City>> findCitiesForCountryCode(final String code);
 
     @Query("SELECT * FROM cities ORDER BY name")
